@@ -21,7 +21,7 @@ if($hournow >= 8 and $hournow < 18){
 
 </head>
 <body>
-<img src="img/vp_banner.png" alt="Veebiprogrammeerimise kursuse logo">
+<img src="../img/vp_banner.png" alt="Veebiprogrammeerimise kursuse logo">
   <h1><?php echo $username; ?> programmeerib veebi</h1>
   <p>See veebileht on loodud õppetöö kaigus ning ei sisalda mingit tõsiseltvõetavat sisu!</p>
   <p> Lehe avamise aeg: <?php echo $fulltimenow; ?>. 

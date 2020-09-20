@@ -1,44 +1,11 @@
 <?php
-//loeme andmebaasi login info muutujad
-require("../../../config.php");
-//kui kasutaja on vormis andmeid saatnud, siis salvestame andmebaasi
-$database = "if20_hardi_an_3";
-if(isset($_POST["submitnonsens"])){
-	if(!empty($_POST["nonsens"])){
-		//andmebaasi lisamine
-		//loome andmebaasi ühenduse
-		$conn = new mysqli($serverhost, $serverusername, $serverpassword, $database);
-		//valmistame ette sql käsu
-		$stmt = $conn->prepare("INSERT INTO nonsense(nonsenseidea) VALUES(?)");
-		echo $conn->error;
-		$stmt->bind_param("s", $_POST["nonsens"]);
-		$stmt->execute();
-		$stmt->close();
-		$conn->close();
-	}
-}
-
-//loeme andmebaasist
-$nonsenshtml="";
-$conn = new mysqli($serverhost, $serverusername, $serverpassword, $database);
-//valmistame ette sql käsu
-$stmt = $conn->prepare("SELECT nonsenseidea FROM nonsense");
-echo $conn->error;
-//seome tulemuse mingi muutujaga
-$stmt->bind_result($nonsensfromdb);
-$stmt->execute();
-//võtan kuni on
-while($stmt->fetch()){
-	$nonsenshtml .= "<p>" .$nonsensfromdb ."</p>";
-}
-$stmt->close();
-$conn->close();
-//ongi andmebaasist loetud
-
-
   $username = "Hardi Anton";
   $fulltimenow = date("d.m.Y H:i:s");
+  $daynow = date("d");
+  $monthnow = date("m");
   $hournow = date("H");
+  $yearnow = date("Y");
+  $timenow = date("H:i:s");
   $partofday = "lihtsalt aeg";
   
   //vaatame mida vormist serverile saadetakse
@@ -117,29 +84,24 @@ $conn->close();
   //$i += 1; on sama mis
   //$i ++;
   $imghtml = "";
-  for($i=0;$i<$piccount;$i++){
-	  $imghtml .= '<img src="../vp_pics/' .$allpicfiles[$i] .'" ';
-	  $imghtml .= 'alt="Tallinna ülikool">';
-  }
+  $picnum = mt_rand(0, ($piccount - 1));
+  $imghtml .= '<img src="../vp_pics/' .$allpicfiles[$picnum] .'" ';
+  $imghtml .= 'alt="Random pic">';
+
 require("header.php");
 ?>
   <img src="../img/vp_banner.png" alt="Veebiprogrammeerimise kursuse bänner">
   <h1><?php echo $username; ?> programmeerib veebi</h1>
   <p>See veebileht on loodud õppetöö käigus ning ei sisalda mingit tõsiseltvõetavat sisu!</p>
   <p>Leht on loodud veebiprogrammeerimise kursusel <a href="http://www.tlu.ee">Tallinna Ülikooli</a> Digitehnoloogiate instituudis.</p>
-  <p>Lehe avamise aeg: <?php echo $weekdaynameset[$weekdaynow - 1] .", " . $fulltimenow; ?>. 
+  <p>Lehe avamise aeg: <?php echo $weekdaynameset[$weekdaynow - 1] .", " . $daynow .". " . $monthnameset[$monthnow - 1] ." ". $yearnow .", kell " . $timenow ; ?>. 
   <?php echo "Parajasti on " .$partofday ."."; ?></p>
   <p><?php echo $semesterinfo; ?></p>
   <hr>
   <?php echo $imghtml; ?>
   <hr>
-  <form method="POST">
-  <label>Sisesta oma tänane mõttetu mõte!</label>
-  <input type="text" name="nonsens" placeholder="mõttekoht">
-  <input type="submit" value="Saada ära!" name="submitnonsens">
-  </form>
-  <hr>
-  <?php echo $nonsenshtml; ?>
+  <p><a href="enterthought.php">Sisesta mõte</a></p>
+  <p><a href="viewthoughts.php">Vaata sisestatud mõtteid</a></p>
   
 </body>
 </html>

@@ -104,7 +104,7 @@ require("header.php");
   <li><a href="enterthought.php">Sisesta mõte</a></li>
   <li><a href="viewthoughts.php">Vaata sisestatud mõtteid</a></li>
   <li><a href="listfilms.php">Filmiinfo näitamine</a></li>
-  <li><a href="addfilms.php">Filmiinfo lisamine</a></li>
+  <li><a href="addfilm.php">Filmiinfo lisamine</a></li>
   </ul>
   
 </body>
